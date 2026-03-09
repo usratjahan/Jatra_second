@@ -90,6 +90,63 @@ const   Navbar = () => {
             </Link>
 
             {/* ── DESKTOP NAV ── */}
+              <nav className="hidden lg:flex items-center gap-1">
+
+              {/* Home */}
+              <Link
+                to="/"
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                  ${isActive('/') ? 'text-green-400 bg-green-400/10' : 'text-gray-300 hover:text-white hover:bg-white/10'}`}
+              >
+                Home
+              </Link>
+
+              {/* Choose Community Dropdown */}
+              <div className="relative" ref={communityRef}>
+                <button
+                  onClick={() => setCommunityOpen(!communityOpen)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    ${communityOpen ? 'text-green-400 bg-green-400/10' : 'text-gray-300 hover:text-white hover:bg-white/10'}`}
+                >
+                  <span>Choose Community</span>
+                  <svg
+                    className={`w-4 h-4 transition-transform duration-200 ${communityOpen ? 'rotate-180' : ''}`}
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown */}
+                {communityOpen && (
+                  <div className="absolute top-full left-0 mt-2 w-52 bg-gray-800 rounded-xl shadow-xl shadow-black/30 border border-white/10 overflow-hidden z-50">
+                    {communityOptions.map((opt) => (
+                      <Link
+                        key={opt.label}
+                        to={opt.href}
+                        onClick={() => setCommunityOpen(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:text-white hover:bg-green-500/20 transition-all duration-150"
+                      >
+                        <span className="text-lg">{opt.icon}</span>
+                        <span className="font-medium">{opt.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Other Nav Links */}
+              {navLinks.slice(1).map((link) => (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                    ${isActive(link.href) ? 'text-green-400 bg-green-400/10' : 'text-gray-300 hover:text-white hover:bg-white/10'}`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
           
 
             {/* ── LOGIN BUTTON ── */}
